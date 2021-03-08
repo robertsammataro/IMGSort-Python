@@ -85,51 +85,6 @@ def sortWindow(inp, out, png, jpg, jpeg, gif, bmp, height, width, scaleEnable, d
             timeStamp = str(datetime.now().year)+str(datetime.now().month)+str(datetime.now().day)+str(datetime.now().hour)+str(datetime.now().minute)+str(datetime.now().second)+str(datetime.now().microsecond)
             
             
-            ##THIS IS A BRUTE FORCE METHOD. FIND A WAY TO TURN THIS INTO A JSON FILE!
-            
-            if("lucario" in tags):
-                tags.append("pokemon")
-                tags.append("canine")
-            if("blaziken" in tags):
-                tags.append("pokemon")
-                tags.append("avian")
-            if("zoroark" in tags):
-                tags.append("pokemon")
-                tags.append("canine")
-            if("zeraora" in tags):
-                tags.append("pokemon")
-                tags.append("feline")
-            if("arcanine" in tags):
-                tags.append("pokemon")
-                tags.append("canine")
-            if("lycanroc" in tags):
-                tags.append("pokemon")
-                tags.append("canine")
-            if("braixen" in tags):
-                tags.append("pokemon")
-                tags.append("canine")
-            if("lugia" in tags):
-                tags.append("pokemon")
-            if("charizard" in tags):
-                tags.append("pokemon")
-                tags.append("dragon")
-                tags.append("scalie")
-            if("noivern" in tags):
-                tags.append("pokemon")
-                tags.append("dragon")
-                tags.append("scalie")
-            if("garchomp" in tags):
-                tags.append("pokemon")
-                tags.append("dragon")
-                tags.append("scalie")
-            if("mienshao" in tags):
-                tags.append("pokemon")
-            if("floatzel" in tags):
-                tags.append("pokemon")
-            if("buizel" in tags):
-                tags.append("pokemon")
-            
-            
             for tag in tags:
                 
                 if(os.path.exists(out+"\\"+tag)==False):
@@ -139,7 +94,7 @@ def sortWindow(inp, out, png, jpg, jpeg, gif, bmp, height, width, scaleEnable, d
                     shutil.copy(inp+"\\"+file, out+"\\"+tag)
                     os.rename(out+"\\"+tag+"\\"+file, out+"\\"+tag+"\\"+timeStamp+"."+(file.split(".")[-1]))
         
-        if(delOriginal == True):
+        if(delOriginal == True and tags != ""):
             os.remove(inp+"\\"+file)
         count = count + 1
     
@@ -155,15 +110,15 @@ def fileToList(inp, png, jpg, jpeg, bmp, gif):
     dirList = os.listdir(inp)
     masterList = []
     for file in dirList:
-        if(file[-4:] == ".png" and png == True):
+        if(file.lower()[-4:] == ".png" and png == True):
             masterList.append(file)
-        elif(file[-4:] == ".jpg" and jpg == True):
+        elif(file.lower()[-4:] == ".jpg" and jpg == True):
             masterList.append(file)
-        elif(file[-5:] == ".jpeg" and jpeg == True):
+        elif(file.lower()[-5:] == ".jpeg" and jpeg == True):
             masterList.append(file)
-        elif(file[-4:] == ".bmp" and bmp == True):
+        elif(file.lower()[-4:] == ".bmp" and bmp == True):
             masterList.append(file)
-        elif(file[-4:] == ".gif" and gif == True):
+        elif(file.lower()[-4:] == ".gif" and gif == True):
             masterList.append(file)
     return(masterList)
       
@@ -222,7 +177,7 @@ def optionsWindow():
     logo_label = Label(optionWindow, image=logo_img, width = 200, height = 50)
     logo_label.place(anchor="nw", relx=.025, rely=.025)
     
-    copyright_Label = Label(optionWindow, text="     © 2020 Robert Sammataro\n\tFree For Home Use")
+    copyright_Label = Label(optionWindow, text="     © 2020-2021 Robert Sammataro\n\t         Free For Home Use")
     copyright_Label.config(font="Times")
     copyright_Label.place(anchor='ne', relx=.975, rely = .05)
     
@@ -234,7 +189,7 @@ def optionsWindow():
     inputDirectory = Entry(optionWindow)
     inputDirectory.configure(font=("Arial",11))
     inputDirectory.place(anchor='w', relx=.05, rely=.25, height=20, width=490)
-    inputDirectory.insert(0,r"D:\Robby Sammataro\Downloads\toSort")
+    inputDirectory.insert(0,r"")
     
     inputBrowse = Button(optionWindow, text="Browse", command=selectInputDirectory)
     inputBrowse.place(anchor='w', relx=.84, rely=.25, height=20, width=70)
@@ -246,7 +201,7 @@ def optionsWindow():
     outputDirectory = Entry(optionWindow)
     outputDirectory.configure(font=("Arial",11))
     outputDirectory.place(anchor='w', relx=.05, rely=.37, height=20, width=490)
-    outputDirectory.insert(0,r"D:\Robby Sammataro\Pictures\GDrive")
+    outputDirectory.insert(0,r"")
     
     outputBrowse = Button(optionWindow, text="Browse", command=selectOutputDirectory)
     outputBrowse.place(anchor='w', relx=.84, rely=.37, height=20, width=70)
@@ -316,7 +271,7 @@ def optionsWindow():
     label.config(borderwidth=0)
     label.place(anchor='center', relx=.95, rely=.25)
     
-    versionLabel = Label(optionWindow, text = "Version 1.2.0", borderwidth = 1, relief="sunken", width=15, bg="white")
+    versionLabel = Label(optionWindow, text = "Version 1.2.1", borderwidth = 1, relief="sunken", width=15, bg="white")
     versionLabel.place(anchor='sw', relx=0, rely=1)
     
     spacerLabel = Label(optionWindow, text = "", borderwidth = 1, relief="sunken", width=100, bg="white")
@@ -343,4 +298,6 @@ def optionsWindow():
     
     mainloop()
 
-optionsWindow()
+if __name__ == "__main__":
+    
+    optionsWindow()
