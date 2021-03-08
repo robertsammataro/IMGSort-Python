@@ -1,10 +1,10 @@
-##IMGSort v1.2.1
+## IMGSort v1.2.1
 Generate Simple Archives of Image Files!  
 Build Date: 8 March 2021  
 
-####Welcome to IMGSort, the simplest tool for creating image archives!
+#### Welcome to IMGSort, the simplest tool for creating image archives!
 
-###How to use:
+### How to use:
   - Before beginning, ensure that all files you wish to sort are in the same
     directory.
 
@@ -32,13 +32,13 @@ Build Date: 8 March 2021
     separating tags with a comma or period. Leaving the field empty will skip over the
     displayed image.
 
-###Tips and Shortcuts:  
+### Tips and Shortcuts:  
 
   - Ending a list of tags with two commas, periods, or a combination of the two
     will result in a copy of the image being placed in the absolute path of the
     output directory  
 
-###Troubleshooting:
+### Troubleshooting:
 
 **IMGSort will not launch**
 
@@ -54,7 +54,7 @@ Ensure the desired image is in a compatible file format and that the format
 is selected on the main window upon launch.
 
 
-###Changelog:
+### Changelog:
 
 #### 8 March 2021:
 
@@ -76,11 +76,11 @@ is selected on the main window upon launch.
 
     - Reformatted README with better markdown and updated information
 
-###Future Additions:
+### Future Additions:
   - Feature where the user can add default Input and Output directories  
   - Feature where the user can send images to multiple folders with one tag  
 
-###Known Bugs:  
+### Known Bugs:  
   - If the user submits a series of tags including a character that cannot be
     used as a folder name on the tag entry screen, the program will crash.
 
