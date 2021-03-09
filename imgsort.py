@@ -1,12 +1,9 @@
 import os
-from os import *
 import shutil
 import tkinter as tk
 from tkinter import *
 from PIL import ImageTk,Image
 from datetime import datetime
-from tkinter import filedialog
-from tkinter import messagebox
 
 imgsorticon = "imgsort.ico"
 logoimage = "logo.png"
@@ -14,23 +11,28 @@ helpimage = "question.png"
 
 def sortWindow(inp, out, png, jpg, jpeg, gif, bmp, height, width, scaleEnable, delOriginal, dirList):
     
-    count = 1
+    if not inp.endswith("\\"):
+        inp += "\\"
+        
+    if not out.endswith("\\"):
+        out += "\\"
     
+    #Tracks what number files is currently being sorted
+    count = 1
     
     window = Tk()
     window.iconbitmap(imgsorticon)
     window.title("IMGSort")
     window.geometry("500x500")
     
-    #This line makes it so that way the picture scales properly the first time around :)
+    #This line makes it so that way the picture scales properly the first time around
     window.update()
     
     for file in dirList:
-
         
-        
+        #Scales the Image to fill the tag window
 
-        image = Image.open(inp+'\\'+file)
+        image = Image.open(inp+file)
         width, height = image.size
         factor = (width/height)
         
@@ -42,16 +44,7 @@ def sortWindow(inp, out, png, jpg, jpeg, gif, bmp, height, width, scaleEnable, d
         if(int(window_height*factor) > window_width):
             image = image.resize((window_width,int(window_width/factor)),Image.ANTIALIAS)
             
-        
-          #Outdated Scaling Technique. Included for reference
-        
-#         #Portrait
-#         if(width<height):
-#             image = image.resize((int(350*factor), 350), Image.ANTIALIAS)
-#         
-#         #Landscape
-#         if(width>=height):
-#             image = image.resize(((window.winfo_width()),(int((window.winfo_width())/factor))), Image.ANTIALIAS)
+        #Loads widgets into the tag window
 
         img1 = ImageTk.PhotoImage(image=image)
         label = tk.Label(window, image=img1)
@@ -69,12 +62,22 @@ def sortWindow(inp, out, png, jpg, jpeg, gif, bmp, height, width, scaleEnable, d
         tagEntry = Entry(buttonFrame)
         tagEntry.place(anchor='nw', relx=0, rely=0, width = 175, height=20)
         
+        #This window.quit command breaks the mainloop()
         okButton = Button(buttonFrame, text="OK", command=window.quit)
         okButton.place(anchor='ne', relx=1, rely=0, width=70, height=20)
                        
         window.mainloop()
         
+        
+        #Moves on to scanning the tags entered by the user
+        #This section of code only runs once when the user clicks "OK" on the tag entry screen
+        
+        
         tags = tagEntry.get()
+        
+        #Makes it so that if no tags are entered, the file is copied to the directory specified as the output
+        if tags == "":
+            tags += "?"
     
         
         if(tags != ""):
@@ -84,24 +87,29 @@ def sortWindow(inp, out, png, jpg, jpeg, gif, bmp, height, width, scaleEnable, d
             tags = tags.split(",")
             timeStamp = str(datetime.now().year)+str(datetime.now().month)+str(datetime.now().day)+str(datetime.now().hour)+str(datetime.now().minute)+str(datetime.now().second)+str(datetime.now().microsecond)
             
-            
             for tag in tags:
                 
-                if(os.path.exists(out+"\\"+tag)==False):
-                    os.makedirs(out+"\\"+tag)
+                #This line prevents the software from trying to create a file with reserved characters. If a specific tag consists strictly of
+                #reserved characters it will be copied to the root output directory
                 
-                if(os.path.exists(out+"\\"+tag+"\\"+timeStamp+"."+(file.split(".")[-1])) == False):
-                    shutil.copy(inp+"\\"+file, out+"\\"+tag)
-                    os.rename(out+"\\"+tag+"\\"+file, out+"\\"+tag+"\\"+timeStamp+"."+(file.split(".")[-1]))
+                tag = tag.replace("<","").replace(">","").replace(":","").replace('"',"").replace("/","").replace("|","").replace("?","").replace("*","")
+                
+                if(os.path.exists(out+tag)==False):
+                    os.makedirs(out+tag)
+                
+                if not os.path.exists(out+tag+"\\"+timeStamp+"."+(file.split(".")[-1])):
+                    shutil.copy(inp+file, out+tag+"\\"+timeStamp+"."+(file.split(".")[-1]))
         
-        if(delOriginal == True and tags != ""):
-            os.remove(inp+"\\"+file)
-        count = count + 1
+        if(delOriginal == True):
+            os.remove(inp+file)
+        
+        count += 1
     
+    # Message box for when all files have been scanned/copied
     root = Tk()
     root.withdraw()
     messagebox.showinfo(title="Info", message="All Files Have Been Sorted. View Files At:\n"+str(out))
-    quit()
+    exit()
         
         
             
@@ -271,14 +279,11 @@ def optionsWindow():
     label.config(borderwidth=0)
     label.place(anchor='center', relx=.95, rely=.25)
     
-    versionLabel = Label(optionWindow, text = "Version 1.2.1", borderwidth = 1, relief="sunken", width=15, bg="white")
+    versionLabel = Label(optionWindow, text = "Version 1.2.2", borderwidth = 1, relief="sunken", width=15, bg="white")
     versionLabel.place(anchor='sw', relx=0, rely=1)
     
     spacerLabel = Label(optionWindow, text = "", borderwidth = 1, relief="sunken", width=100, bg="white")
     spacerLabel.place(anchor='sw', x=108, rely=1)
-    
-    eulaLabel = Label(optionWindow, text = "View EULA", borderwidth = 1, relief="sunken", width=15, bg="white")
-    eulaLabel.place(anchor='se', relx=1, rely=1)
     
     runButton = Button(optionWindow, text="Run", command=lambda:checkValidLocations(inputDirectory.get(),      #Directory for the source location
                                                                                     outputDirectory.get(),     #Directory for the destination location
@@ -293,7 +298,7 @@ def optionsWindow():
                                                                                     bool(delOrig.get())))      #Enables deleting original files
     runButton.place(anchor='w', relx=.84, rely=.89, width=75)
     
-    closeButton = Button(optionWindow, text="Exit", command=optionWindow.destroy)
+    closeButton = Button(optionWindow, text="Exit", command=exit)
     closeButton.place(anchor='w', relx=.67, rely=.89, width=75)
     
     mainloop()

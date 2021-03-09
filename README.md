@@ -1,10 +1,9 @@
-##IMGSort v1.2.1
-Generate Simple Archives of Image Files!  
-Build Date: 8 March 2021  
+## IMGSort v1.2.2
+Build Date: 9 March 2021  
 
-####Welcome to IMGSort, the simplest tool for creating image archives!
+#### Welcome to IMGSort, the simplest tool for creating image archives!
 
-###How to use:
+### How to use:
   - Before beginning, ensure that all files you wish to sort are in the same
     directory.
 
@@ -24,7 +23,7 @@ Build Date: 8 March 2021
 
   - To delete images from the input directory as they are sorted, click the
     'Delete Original Image' box. If no destination tags are entered, the files
-    will NOT be deleted (new to v1.2.1)
+    will be copied to the absolute path of the output directory (new to v1.2.2)
 
   - Click "Run" and a window will pop up displaying one image at a time. In the
     box at the bottom, enter the name of the subfolder in the Output Directory
@@ -32,31 +31,47 @@ Build Date: 8 March 2021
     separating tags with a comma or period. Leaving the field empty will skip over the
     displayed image.
 
-###Tips and Shortcuts:  
+### Tips and Shortcuts:  
 
-  - Ending a list of tags with two commas, periods, or a combination of the two
-    will result in a copy of the image being placed in the absolute path of the
-    output directory  
+  - Entering a question mark (?) as a tag will result in a copy of the current image
+    being copied to the output directory's absolute path.  
 
-###Troubleshooting:
+### Troubleshooting:
 
-**IMGSort will not launch**
-
-Ensure that all assets are in the same folder as IMGSort.exe. These Files include:
+**IMGSort will not launch:**  
+Ensure that all assets are in the same folder as IMGSort.py  
+These Files include:  
 - imgsort.ico
 - logo.png
 - question.png
 
 
-**Some images not appearing in the display window**
-
+**Some images not appearing in the display window:**  
 Ensure the desired image is in a compatible file format and that the format
 is selected on the main window upon launch.
 
 
-###Changelog:
+### Changelog:
 
-#### 8 March 2021:
+#### 9 March 2021: v1.2.2  
+
+    - If no tags are entered, the image will be copied to the root directory of  
+      the destination folder. If the delete original option is enabled, the  
+      original picture will be removed (Undone from v1.2.1)
+
+    - Fixed a bug where entering a character that could not be used as a folder  
+      name would cause the program to crash
+
+    - Added better comments explaining the purpose of variables and loops
+
+    - Removed broken EULA button since the license is included in repository
+
+    - Added feature where Entering '?' as a tag will copy the specified image  
+      to the absolute path of the output directory
+
+    - Updated Changelog and removed old references to imgsort.exe
+
+#### 8 March 2021: v1.2.1
 
     - Fixed a bug where filed extensions with upper case letters were not
       being recognized
@@ -76,13 +91,14 @@ is selected on the main window upon launch.
 
     - Reformatted README with better markdown and updated information
 
-###Future Additions:
+### Future Additions:
   - Feature where the user can add default Input and Output directories  
-  - Feature where the user can send images to multiple folders with one tag  
+  - Feature where the user can send images to multiple folders with one tag
 
-###Known Bugs:  
-  - If the user submits a series of tags including a character that cannot be
-    used as a folder name on the tag entry screen, the program will crash.
+### Known Bugs:  
+  - If a non-image file has a file extension that IMGSort can recognize, it
+    will cause a crash when loaded in
+
 
 Written in Python 3.7.8  
 © 2020-2021 Robert Sammataro  
