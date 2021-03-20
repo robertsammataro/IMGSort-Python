@@ -1,4 +1,5 @@
 import os
+import json
 import shutil
 import tkinter as tk
 from tkinter import *
@@ -85,6 +86,19 @@ def sortWindow(inp, out, png, jpg, jpeg, gif, bmp, height, width, scaleEnable, d
             tags = tags.replace(".",",")
             tags = tags.lower()
             tags = tags.split(",")
+            
+            #Checks to see if any of the inputed tags are supertags and then strikes out any duplicate values 
+            parsedtags = []
+            for tag in tags:
+                
+                for item in get_json_tags(tag):
+                    try:
+                        parsedtags.append(item)
+                    except:
+                        continue
+                    
+            tags = remove_duplicates(parsedtags)
+            
             timeStamp = str(datetime.now().year)+str(datetime.now().month)+str(datetime.now().day)+str(datetime.now().hour)+str(datetime.now().minute)+str(datetime.now().second)+str(datetime.now().microsecond)
             
             for tag in tags:
@@ -110,11 +124,74 @@ def sortWindow(inp, out, png, jpg, jpeg, gif, bmp, height, width, scaleEnable, d
     root.withdraw()
     messagebox.showinfo(title="Info", message="All Files Have Been Sorted. View Files At:\n"+str(out))
     exit()
+
+def remove_duplicates(tags:list):
+    final_tags = []
+    for value in tags:
+        if value not in final_tags:
+            final_tags.append(value)
+    return final_tags
+
+
+    # This method will take in a string (key:str) and return a list of strings consisting
+    # of the original key string alongside any values at key "key:str" in usertags.json
+    
+    # This funciton allows the user to create their own custom multitags for IMGSort
+    # without the need to hardcode checks into the software. If the json file is
+    # unloadable, the function will return just the original string. For this to work,
+    # supertag.json needs to be in the cwd.
+
+def get_json_tags(key:str):
+    
+    expanded_keys = []
+    
+    if not os.path.exists(os.getcwd()+"//supertag.json"):
+        expanded_keys.append(key.replace("$",""))
+        return expanded_keys
+    
+    if(len(key) == 0):
+        expanded_keys.append("")
+        return expanded_keys
+    
+    if key[0] == '$':
+        expanded_keys.append(key.replace("$",""))
+        return expanded_keys
+    
+    #Tries to open the Json file and sees if it's in a valid format
+    try:
+        openjson = open("supertag.json")
+        usertags = json.load(openjson)
+        openjson.close()
         
+    except:
+        print("supertag.json is not readable. Check for syntax and try again.")
+        expanded_keys.append(key)
+        return expanded_keys
+    
+    #Adds tags from supertag.json to a list and returns it
+    try:
+        expanded_keys.append(key)
+        if key in usertags:
+            for value in (list(usertags.get(key))):
+                expanded_keys.append(str(value))
+        return expanded_keys
+    
+    #If there's an error it returns a list containing only the original key.
+    except:
+        expanded_keys.append(key)
+        return expanded_keys
         
             
 
 def fileToList(inp, png, jpg, jpeg, bmp, gif):
+    
+    #This is the line that adds files to the list of files that will be sorted. Here
+    #you can easily add a check to sort a certain way depending on some kind of input.
+    
+    #We might also wnat to go ahead and make it so that the list of file extensions to
+    #use are included in a list, so that way it's more user friendly to call the
+    #function down the road. 
+    
     dirList = os.listdir(inp)
     masterList = []
     for file in dirList:

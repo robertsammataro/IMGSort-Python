@@ -1,5 +1,5 @@
-## IMGSort v1.2.2
-Build Date: 9 March 2021  
+## IMGSort v1.2.3
+Build Date: 20 March 2021  
 
 #### Welcome to IMGSort, the simplest tool for creating image archives!
 
@@ -31,10 +31,26 @@ Build Date: 9 March 2021
     separating tags with a comma or period. Leaving the field empty will skip over the
     displayed image.
 
+
+### Using Supertags:
+  - IMGSort can easily be configured so that entering a certain tag will
+    automatically sort the current image to multiple destination instead of  
+    having to write in each individual folders name.  
+
+  - To create a supertag, in the supertag.json file, create keys representing  
+    the tag you wish to use as a supertag and set its value to a list of  
+    strings of folders you would like to output to.  
+
+  - To override a supertag, add a '$' to the beginning of the tag and IMGSort  
+    will not send the current image to any of the folders associated with the  
+    supertag.
+
 ### Tips and Shortcuts:  
 
   - Entering a question mark (?) as a tag will result in a copy of the current image
     being copied to the output directory's absolute path.  
+
+  - Entering a dollar sign ($) at the beginning of a tag will treat it like a regular tag if it is a supertag.  
 
 ### Troubleshooting:
 
@@ -52,6 +68,17 @@ is selected on the main window upon launch.
 
 
 ### Changelog:
+
+### 20 March 2021: v1.2.3
+
+    - Added supertags  
+
+    - Added check_json_tags() (See Using Supertags)  
+
+    - Added remove_duplicates(): This is a more streamlined way of removing  
+      repeated values from within a list of tags to be copied.  
+
+    - Added supertag.json  
 
 #### 9 March 2021: v1.2.2  
 
@@ -93,11 +120,18 @@ is selected on the main window upon launch.
 
 ### Future Additions:
   - Feature where the user can add default Input and Output directories  
-  - Feature where the user can send images to multiple folders with one tag
+
+  - Feature where the user can send images to multiple folders with one tag  
+
+  - Feature checking to make sure a file will not be overwritten as it is copied  
+    (currently not implemented)
 
 ### Known Bugs:  
   - If a non-image file has a file extension that IMGSort can recognize, it
-    will cause a crash when loaded in
+    will cause a crash when loaded in  
+
+  - Selecting a folder that doesn't exist will force IMGSort to the tag screen
+    after closing out of the error window  
 
 
 Written in Python 3.7.8  
