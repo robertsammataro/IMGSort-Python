@@ -34,15 +34,15 @@ Build Date: 20 March 2021
 
 ### Using Supertags:
   - IMGSort can easily be configured so that entering a certain tag will
-    automatically sort the current image to multiple destination instead of  
+    automatically sort the current image to multiple destination instead of
     having to write in each individual folders name.  
 
-  - To create a supertag, in the supertag.json file, create keys representing  
-    the tag you wish to use as a supertag and set its value to a list of  
+  - To create a supertag, in the supertag.json file, create keys representing
+    the tag you wish to use as a supertag and set its value to a list of
     strings of folders you would like to output to.  
 
-  - To override a supertag, add a '$' to the beginning of the tag and IMGSort  
-    will not send the current image to any of the folders associated with the  
+  - To override a supertag, add a '$' to the beginning of the tag and IMGSort
+    will not send the current image to any of the folders associated with the
     supertag.
 
 ### Tips and Shortcuts:  
