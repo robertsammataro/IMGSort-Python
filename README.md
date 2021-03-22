@@ -1,4 +1,4 @@
-## IMGSort v1.2.3
+## IMGSort v1.2.3a
 Build Date: 20 March 2021  
 
 #### Welcome to IMGSort, the simplest tool for creating image archives!
@@ -50,7 +50,7 @@ Build Date: 20 March 2021
   - Entering a question mark (?) as a tag will result in a copy of the current image
     being copied to the output directory's absolute path.  
 
-  - Entering a dollar sign ($) at the beginning of a tag will treat it like a regular tag if it is a supertag.  
+  - Entering a dollar sign ($) at the beginning of a supertag will treat it like a regular tag.  
 
 ### Troubleshooting:
 
@@ -69,7 +69,11 @@ is selected on the main window upon launch.
 
 ### Changelog:
 
-### 20 March 2021: v1.2.3
+#### 21 March 2021: v1.2.3a
+
+    - Cleaned up supertag.json
+
+#### 20 March 2021: v1.2.3
 
     - Added supertags  
 
